@@ -4,16 +4,17 @@ import android.content.Context
 import androidx.room.Room
 
 object DatabaseProvider {
-    private var db: AppDatabase? = null
+    @Volatile private var db: AppDatabase? = null
 
     fun getDatabase(context: Context): AppDatabase {
-        if (db == null) {
-            db = Room.databaseBuilder(
+        return db ?: synchronized(this) {
+            db ?: Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
                 "mobile_security_db"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()   // <— avoids migration crash during dev
+                .build().also { db = it }
         }
-        return db!!
     }
 }

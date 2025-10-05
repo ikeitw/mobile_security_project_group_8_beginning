@@ -18,6 +18,7 @@ fun MainScreen() {
                 actions = {
                     TextButton(onClick = { current = "network" }) { Text("Network") }
                     TextButton(onClick = { current = "auth" }) { Text("Auth") }
+                    TextButton(onClick = { current = "media" }) { Text("Media") }
                     TextButton(onClick = { current = "security" }) { Text("Security") } // <-- add
                 }
             )
@@ -27,7 +28,8 @@ fun MainScreen() {
             when (current) {
                 "network" -> NetworkScreen()
                 "auth" -> AuthScreen()
-                "security" -> SecurityScreen() // <-- add
+                "security" -> SecurityScreen()
+                "media" -> MediaScreen()
             }
         }
     }
